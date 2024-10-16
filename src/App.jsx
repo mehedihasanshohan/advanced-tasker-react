@@ -8,9 +8,9 @@ function App() {
   return (
     <>
         <h2 className='text-red-400 font-bold text-center'>welcome to tasker app</h2>
-      <Navbar></Navbar>
-      <Hero></Hero>
-      <Footer></Footer>
+       <Navbar></Navbar>
+       <Hero></Hero>
+       <Footer></Footer>
 
     </>
   )
