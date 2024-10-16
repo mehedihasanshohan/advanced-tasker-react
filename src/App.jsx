@@ -2,6 +2,7 @@ import './App.css'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
 import Navbar from './components/Navbar'
+import TaskBoard from './components/TaskBoard/TaskBoard'
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
         <h2 className='text-red-400 font-bold text-center'>welcome to tasker app</h2>
        <Navbar></Navbar>
        <Hero></Hero>
+       <TaskBoard></TaskBoard>
        <Footer></Footer>
 
     </>
