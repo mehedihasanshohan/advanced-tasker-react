@@ -11,7 +11,7 @@ const TaskBoard = () => {
     "description" : " I want to learn react",
     "tags" : ["web", "react", "js"],
     "priority" : "High",
-    "isfavourite" : true
+    "isFavourite" : false
   }
     const [tasks, setTasks] = useState([defaultTask]);
 
