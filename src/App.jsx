@@ -16,6 +16,8 @@ function App() {
         </div>
        <Footer></Footer>
 
+       {/* <AddTaskModal></AddTaskModal> */}
+
     </>
   )
 }
