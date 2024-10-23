@@ -1,118 +1,259 @@
-import { useState } from "react"
+// /* eslint-disable no-unused-vars */
+// /* eslint-disable no-undef */
+// /* eslint-disable react/prop-types */
 
-const AddTaskModal = ({onSave}) => {
+// import { useState } from "react"
 
-    const [task, setTask] = useState({
+// const AddTaskModal = ({onSave, taskToUpdate}) => {
+
+//     const [task, setTask] = useState( taskToUpdate || {
+//       title: '',
+//       description: '',
+//       tags : [],
+//       priority : '',
+//       isFavourite: false,
+//     });
+
+//     const [isAdd, setIsAdd] = useState(object.is(taskToUpdate, null))
+
+//     const handleChange = (e) => {
+//       const name = e.target.name;
+//       let value= e.target.value;
+//       if(name === 'tags'){
+//         value = value.split(",");
+//       }
+//       setTask({
+//         ...task,
+//         [name]: value
+//       })
+//       // console.log(task);
+//     }
+
+//   return (
+//     <>
+//       <div className="bg-black bg-opacity-65 h-full w-full z-10 absolute top-0 left-0"></div>
+//          <form
+//       className=" mx-auto my-10 w-full max-w-[740px] rounded-xl border border-[#FEFBFB]/[36%] bg-[#191D26] p-9 max-md:px-4 lg:my-20 lg:p-11
+//       z-10 absolute top-1/4 left-1/3"
+//     >
+//       <h2
+//         className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]"
+//       >
+//         {isAdd ? 'Add new task' : "Edit task"}
+//       </h2>
+
+//       {/* inputs */}
+//       <div className="space-y-9 text-white lg:space-y-10">
+//         {/* title */}
+//         <div className="space-y-2 lg:space-y-3">
+//           <label htmlFor="title">Title</label>
+//           <input
+//             className="block w-full rounded-md bg-[#2D323F] px-3 py-2.5"
+//             type="text"
+//             name="title"
+//             id="title"
+//             value={task.title}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+//         {/* description */}
+//         <div className="space-y-2 lg:space-y-3">
+//           <label htmlFor="description">Description</label>
+//           <textarea
+//             className="block min-h-[120px] w-full rounded-md bg-[#2D323F] px-3 py-2.5 lg:min-h-[180px]"
+//             type="text"
+//             name="description"
+//             id="description"
+//             value={task.description}
+//             onChange={handleChange}
+//             required
+//           ></textarea>
+//         </div>
+//         {/* input group */}
+//         <div
+//           className="grid-cols-2 gap-x-4 max-md:space-y-9 md:grid lg:gap-x-10 xl:gap-x-20"
+//         >
+//             {/* tags */}
+//           <div className="space-y-2 lg:space-y-3">
+//             <label htmlFor="tags">Tags</label>
+//             <input
+//               className="block w-full rounded-md bg-[#2D323F] px-3 py-2.5"
+//               type="text"
+//               name="tags"
+//               id="tags"
+//               value={task.tags}
+//             onChange={handleChange}
+//               required
+//             />
+//           </div>
+//           {/* priority */}
+//           <div className="space-y-2 lg:space-y-3">
+//             <label htmlFor="priority">Priority</label>
+//             <select
+//               className="block w-full cursor-pointer rounded-md bg-[#2D323F] px-3 py-2.5"
+//               name="priority"
+//               id="priority"
+//               value={task.priority}
+//               onChange={handleChange}
+//               required
+//             >
+//               <option value="">Select Priority</option>
+//               <option value="Low">Low</option>
+//               <option value="Medium">Medium</option>
+//               <option value="High">High</option>
+//             </select>
+//           </div>
+//         </div>
+//       </div>
+//       {/* input ends */}
+//       <div className="mt-16 flex justify-center lg:mt-20">
+//         <button
+//           type="submit"
+//           className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
+//           onClick={() => onSave(task, isAdd)}
+//         >
+//           Create new Task
+//         </button>
+//       </div>
+//     </form>
+//     </>
+//   )
+// }
+
+// export default AddTaskModal
+
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
+
+import { useState } from "react";
+
+const AddTaskModal = ({ onSave, taskToUpdate }) => {
+  // Set initial task state, using taskToUpdate if available
+  const [task, setTask] = useState(
+    taskToUpdate || {
       title: '',
       description: '',
-      tags : [],
-      priority : '',
-      isFavourite: false
-    });
-
-    const handleChange = (e) => {
-      const name = e.target.name;
-      let value= e.target.value;
-      if(name === 'tags'){
-        value = value.split(",");
-      }
-      setTask({
-        ...task,
-        [name]: value
-      })
-      // console.log(task);
+      tags: [],
+      priority: '',
+      isFavourite: false,
     }
+  );
+
+  // Check if we're adding a new task or updating an existing one
+  const [isAdd, setIsAdd] = useState(!taskToUpdate);
+
+  // Handle form input changes
+  const handleChange = (e) => {
+    const name = e.target.name;
+    let value = e.target.value;
+
+    // Convert tags input to an array
+    if (name === 'tags') {
+      value = value.split(",");
+    }
+
+    setTask({
+      ...task,
+      [name]: value,
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave(task, isAdd); // Pass the task and action type to parent
+  };
 
   return (
     <>
       <div className="bg-black bg-opacity-65 h-full w-full z-10 absolute top-0 left-0"></div>
-         <form
-      className=" mx-auto my-10 w-full max-w-[740px] rounded-xl border border-[#FEFBFB]/[36%] bg-[#191D26] p-9 max-md:px-4 lg:my-20 lg:p-11
-      z-10 absolute top-1/4 left-1/3"
-    >
-      <h2
-        className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]"
+      <form
+        className="mx-auto my-10 w-full max-w-[740px] rounded-xl border border-[#FEFBFB]/[36%] bg-[#191D26] p-9 max-md:px-4 lg:my-20 lg:p-11 z-10 absolute top-1/4 left-1/3"
+        onSubmit={handleSubmit}
       >
-        Add New Task
-      </h2>
+        <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">
+          {isAdd ? 'Add new task' : 'Edit task'}
+        </h2>
 
-      {/* inputs */}
-      <div className="space-y-9 text-white lg:space-y-10">
-        {/* title */}
-        <div className="space-y-2 lg:space-y-3">
-          <label htmlFor="title">Title</label>
-          <input
-            className="block w-full rounded-md bg-[#2D323F] px-3 py-2.5"
-            type="text"
-            name="title"
-            id="title"
-            value={task.title}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        {/* description */}
-        <div className="space-y-2 lg:space-y-3">
-          <label htmlFor="description">Description</label>
-          <textarea
-            className="block min-h-[120px] w-full rounded-md bg-[#2D323F] px-3 py-2.5 lg:min-h-[180px]"
-            type="text"
-            name="description"
-            id="description"
-            value={task.description}
-            onChange={handleChange}
-            required
-          ></textarea>
-        </div>
-        {/* input group */}
-        <div
-          className="grid-cols-2 gap-x-4 max-md:space-y-9 md:grid lg:gap-x-10 xl:gap-x-20"
-        >
-            {/* tags */}
+        {/* inputs */}
+        <div className="space-y-9 text-white lg:space-y-10">
+          {/* title */}
           <div className="space-y-2 lg:space-y-3">
-            <label htmlFor="tags">Tags</label>
+            <label htmlFor="title">Title</label>
             <input
               className="block w-full rounded-md bg-[#2D323F] px-3 py-2.5"
               type="text"
-              name="tags"
-              id="tags"
-              value={task.tags}
-            onChange={handleChange}
+              name="title"
+              id="title"
+              value={task.title}
+              onChange={handleChange}
               required
             />
           </div>
-          {/* priority */}
+
+          {/* description */}
           <div className="space-y-2 lg:space-y-3">
-            <label htmlFor="priority">Priority</label>
-            <select
-              className="block w-full cursor-pointer rounded-md bg-[#2D323F] px-3 py-2.5"
-              name="priority"
-              id="priority"
-              value={task.priority}
+            <label htmlFor="description">Description</label>
+            <textarea
+              className="block min-h-[120px] w-full rounded-md bg-[#2D323F] px-3 py-2.5 lg:min-h-[180px]"
+              name="description"
+              id="description"
+              value={task.description}
               onChange={handleChange}
               required
-            >
-              <option value="">Select Priority</option>
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-            </select>
+            ></textarea>
+          </div>
+
+          {/* input group */}
+          <div className="grid-cols-2 gap-x-4 max-md:space-y-9 md:grid lg:gap-x-10 xl:gap-x-20">
+            {/* tags */}
+            <div className="space-y-2 lg:space-y-3">
+              <label htmlFor="tags">Tags</label>
+              <input
+                className="block w-full rounded-md bg-[#2D323F] px-3 py-2.5"
+                type="text"
+                name="tags"
+                id="tags"
+                value={task.tags.join(",")}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {/* priority */}
+            <div className="space-y-2 lg:space-y-3">
+              <label htmlFor="priority">Priority</label>
+              <select
+                className="block w-full cursor-pointer rounded-md bg-[#2D323F] px-3 py-2.5"
+                name="priority"
+                id="priority"
+                value={task.priority}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
-      {/* input ends */}
-      <div className="mt-16 flex justify-center lg:mt-20">
-        <button
-          type="submit"
-          className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
-          onClick={() => onSave(task)}
-        >
-          Create new Task
-        </button>
-      </div>
-    </form>
-    </>
-  )
-}
 
-export default AddTaskModal
+        {/* Submit button */}
+        <div className="mt-16 flex justify-center lg:mt-20">
+          <button
+            type="submit"
+            className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
+          >
+            {isAdd ? 'Create new Task' : 'Update Task'}
+          </button>
+        </div>
+      </form>
+    </>
+  );
+};
+
+export default AddTaskModal;
